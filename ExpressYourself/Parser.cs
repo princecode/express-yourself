@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ExpressYourself
@@ -31,27 +32,47 @@ namespace ExpressYourself
         public static string GetType(string str)
         {
             // TODO
-            //var typeExpression = new Regex();
-            //var match = typeExpression.Match(str);
-            //if (!match.Success)
-            //{
-            //    return "Type Not Found";
-            //}
-            //else
-            //{
-            //    return match.Groups[1].Value;
-            //}
+            var typeExpression = new Regex(@"Type: (Book | Magazine | DVD),");
+            var match = typeExpression.Match(str);
+            if (!match.Success)
+            {
+                return "Type Not Found";
+            }
+            else
+            {
+                return match.Groups[1].Value;
+            }
         }
         public static string GetLength(string str)
         {
             // TODO
-            return "";
+            var lengthExpression = new Regex(@"Length: (.*)", RegexOptions.IgnoreCase);
+            var match = lengthExpression.Match(str);
+
+            if (!match.Success)
+            {
+                return "Type Not Length";
+            }
+            else
+            {
+                return match.Groups[1].Value;
+            }
+
         }
 
         public static bool IsValidLine(string str)
         {
             // TODO
-            return false;
+            var regValid = new Regex(@"Type: (Book|DVD|Magazine),Title\: (.*),+Length: ([\w ]+)", RegexOptions.IgnoreCase);
+            var match = regValid.Match(str);
+
+            return match.Success;
+
+
+
         }
+
+
     }
 }
+
